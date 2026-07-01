@@ -148,3 +148,26 @@ vite.config.ts.timestamp-*
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Test results & reports
+test-results/
+playwright-report/
+allure-results/
+allure-report/
+blob-report/
+
+# Visual regression snapshots (baseline images)
+# KEEP snapshots in git! They ARE the baseline.
+# Only ignore diff/actual outputs
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local

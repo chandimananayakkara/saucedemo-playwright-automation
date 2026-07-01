@@ -27,40 +27,40 @@ test.describe('Checkout Validation Tests', () => {
     await checkoutPage.expectStepOneLoaded();
   });
 
-  test('should show error when first name is empty', async () => {
+  test('should show error when first name is empty @regression', async () => {
     await checkoutPage.completeStepOne(checkout.emptyFirstName);
     await checkoutPage.expectErrorContains('First Name is required');
   });
 
-  test('should show error when last name is empty', async () => {
+  test('should show error when last name is empty @regression', async () => {
     await checkoutPage.completeStepOne(checkout.emptyLastName);
     await checkoutPage.expectErrorContains('Last Name is required');
   });
 
-  test('should show error when postal code is empty', async () => {
+  test('should show error when postal code is empty @regression', async () => {
     await checkoutPage.completeStepOne(checkout.emptyZip);
     await checkoutPage.expectErrorContains('Postal Code is required');
   });
 
-  test('should show error when all fields are empty', async () => {
+  test('should show error when all fields are empty @regression', async () => {
     await checkoutPage.continueToStepTwo();
     await checkoutPage.expectErrorContains('First Name is required');
   });
 
-  test('should proceed to step two with valid info', async () => {
+  test('should proceed to step two with valid info @smoke @critical', async () => {
     await checkoutPage.completeStepOne(checkout.validCustomer);
     await checkoutPage.expectStepTwoLoaded();
     await checkoutPage.expectProductInSummary('Sauce Labs Backpack');
   });
 
-  test('should cancel checkout and return to cart', async () => {
+  test('should cancel checkout and return to cart @regression', async () => {
     await checkoutPage.cancelCheckout();
     await cartPage.expectPageLoaded();
     await cartPage.expectItemInCart('Sauce Labs Backpack');
 
   });
 
-  test('should display correct total in summary', async () => {
+  test('should display correct total in summary @regression @critical', async () => {
     await checkoutPage.completeStepOne(checkout.validCustomer);
     await checkoutPage.expectStepTwoLoaded();
 

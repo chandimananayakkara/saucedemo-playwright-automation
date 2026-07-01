@@ -9,53 +9,53 @@ test.describe("Login Page Tests", () => {
     await loginPage.navigateToPage()
   });
 
-  test("Should display login page correctly", async ({ page }) => {
+  test("Should display login page correctly @smoke @critical", async ({ page }) => {
     await loginPage.expectPageLoaded()
   });
 
-  test("Should login successfully with valid credentials", async ({ page }) => {
+  test("Should login successfully with valid credentials @smoke @critical", async ({ page }) => {
     await loginPage.login(users.validUser.username, users.validUser.password)
     await expect(page.getByText("Products")).toBeVisible();
     await expect(page).toHaveURL(/inventory/)
   });
 
-  test("Should show error for locked out user", async ({ page }) => {
+  test("Should show error for locked out user @regression", async ({ page }) => {
     await loginPage.login(users.lockedUser.username, users.lockedUser.password)
     await loginPage.expectErrorContains('locked out')
   });
 
-  test("Should show error for invalid credentials", async ({ page }) => {
+  test("Should show error for invalid credentials @regression", async ({ page }) => {
    await loginPage.login(users.invalidUser.username, users.invalidUser.password)
    await loginPage.expectErrorContains('do not match')
   });
 
-  test("Should show error when username is empty", async ({ page }) => {
+  test("Should show error when username is empty @regression", async ({ page }) => {
     await loginPage.fillPassword(users.validUser.password)
     await loginPage.clickLoginButton()
     
     await loginPage.expectErrorContains('Username is required')
   });
 
-  test("Should show error when password is empty", async ({ page }) => {
+  test("Should show error when password is empty @regression", async ({ page }) => {
     await loginPage.fillUsername(users.validUser.username)
     await loginPage.clickLoginButton()
 
     await loginPage.expectErrorContains('Password is required')
   });
 
-  test("Should show error when both fields are empty", async ({ page }) => {
+  test("Should show error when both fields are empty @regression", async ({ page }) => {
    await loginPage.clickLoginButton()
    await loginPage.expectErrorContains('Username is required')
   });
 
-  test('Should close error message when X is clicked', async ({page})=>{
+  test('Should close error message when X is clicked @regression', async ({page})=>{
     await loginPage.clickLoginButton()
     await loginPage.expectedErrorToBeVisible()
     await loginPage.closeErrorMessage()
     await loginPage.expectErrorNotVisible()
   })
 
-  test('Should clear fields and retry login', async({page})=>{
+  test('Should clear fields and retry login @regression', async({page})=>{
     await loginPage.login(users.invalidUser.username, users.invalidUser.password)
     await loginPage.expectedErrorToBeVisible()
 

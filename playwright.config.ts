@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv'
+import { suite } from 'node:test';
 dotenv.config()
 
 export default defineConfig({
@@ -15,10 +16,19 @@ export default defineConfig({
   reporter: [
     ['list'],
     ['html', { open: 'never' }],
+    ['allure-playwright', {
+      detail: true,
+      suiteTitle:true,
+      environmentInfo:{
+        framework:'Playwright',
+        language:'Typescript',
+        project:'SauceDemo E2E Automation'
+      }
+    }]
   ],
   use: {
     trace: 'on-first-retry',
-    screenshot:'on',
+    screenshot:'only-on-failure',
     video:'retain-on-failure',
     baseURL:'https://www.saucedemo.com/',
     navigationTimeout:30*1000,

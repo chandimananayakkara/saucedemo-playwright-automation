@@ -31,7 +31,7 @@ test.describe('Complete Purchase Flow — E2E', () => {
   });
 
 
-  test('should complete purchase of single product', async () => {
+  test('should complete purchase of single product @smoke @critical', async () => {
     
     
     const selectedProduct = products.products[0]; 
@@ -61,7 +61,7 @@ test.describe('Complete Purchase Flow — E2E', () => {
     await checkoutPage.expectOrderComplete();
   });
 
-  test('should complete purchase of multiple products', async () => {
+  test('should complete purchase of multiple products @regression @critical', async () => {
 
     const product1 = products.products[0]; 
     const product2 = products.products[1]; 
@@ -86,7 +86,7 @@ test.describe('Complete Purchase Flow — E2E', () => {
     await checkoutPage.expectOrderComplete();
   });
 
-  test('should return to products after completed order', async () => {
+  test('should return to products after completed order @regression', async () => {
   
     await inventoryPage.addProductToCart(products.products[0].name);
     await inventoryPage.goToCart();

@@ -3,7 +3,23 @@
   "version": "1.0.0",
   "description": "E2E Test Automation Framework for SauceDemo using Playwright &amp; TypeScript",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:smoke": "npx playwright test --grep '@smoke' --project=chromium",
+    "test:critical": "npx playwright test --grep '@critical' --project=chromium",
+    "test:regression": "npx playwright test --grep '@regression' --project=chromium",
+    "test:visual": "npx playwright test tests/visual/ --project=chromium",
+    "test:visual:update": "npx playwright test tests/visual/ --update-snapshots --project=chromium",
+    "test:chromium": "npx playwright test --project=chromium",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:webkit": "npx playwright test --project=webkit",
+    "test:headed": "npx playwright test --project=chromium --headed",
+    "test:ui": "npx playwright test --ui",
+    "report": "npx playwright show-report",
+    "report:allure:generate": "npx allure generate allure-results --clean -o allure-report",
+    "report:allure:open": "npx allure open allure-report",
+    "report:allure": "npm run report:allure:generate && npm run report:allure:open"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chandimananayakkara/saucedemo-playwright-automation.git"
@@ -18,7 +34,9 @@
   "homepage": "https://github.com/chandimananayakkara/saucedemo-playwright-automation#readme",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.0.1"
+    "@types/node": "^26.0.1",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2"
   },
   "dependencies": {
     "dotenv": "^17.4.2"

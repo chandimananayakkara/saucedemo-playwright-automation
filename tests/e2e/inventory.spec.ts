@@ -1,96 +1,111 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../src/pages/LoginPage';
-import { InventoryPage } from '../../src/pages/InventoryPage';
-import { CartPage } from '../../src/pages/CartPage';
-import users from '../../test-data/users.json';
+
+import { test, expect } from '../../src/fixtures/test-fixtures';
 import products from '../../test-data/products.json';
 
 test.describe('Inventory Page Tests', () => {
 
-  let loginPage: LoginPage;
-  let inventoryPage: InventoryPage;
-  let cartPage: CartPage;
-
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
-    cartPage = new CartPage(page);
-
-    await loginPage.navigateToPage();
-    await loginPage.login(
-      users.validUser.username,
-      users.validUser.password
-    );
-  });
-
-  test('should display all 6 products', async () => {
+  test('should display all 6 products @smoke', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
+   
     await inventoryPage.expectProductCount(products.totalProductCount);
   });
 
-  test('should display correct product names', async () => {
+  test('should display correct product names @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     for (const product of products.products) {
       await inventoryPage.expectProductVisible(product.name);
     }
-   
   });
 
-  test('should display correct prices', async () => {
+  test('should display correct prices @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     for (const product of products.products) {
       const actualPrice = await inventoryPage.getProductPrice(product.name);
       expect(actualPrice).toBe(product.price);
     }
   });
 
- 
-  test('should sort products A to Z', async () => {
+  test('should sort products A to Z @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.sortProducts('az');
     await inventoryPage.expectProductsSortedAZ();
   });
 
-  test('should sort products Z to A', async () => {
+  test('should sort products Z to A @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.sortProducts('za');
     await inventoryPage.expectProductsSortedZA();
   });
 
-  test('should sort products price low to high', async () => {
+  test('should sort products price low to high @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.sortProducts('lohi');
     await inventoryPage.expectProductsSortedPriceLowToHigh();
   });
 
-  test('should sort products price high to low', async () => {
+  test('should sort products price high to low @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.sortProducts('hilo');
     await inventoryPage.expectProductsSortedPriceHighToLow();
   });
 
-  test('should add single product to cart', async () => {
+  test('should add single product to cart @smoke @critical', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.addProductToCart('Sauce Labs Backpack');
     await inventoryPage.expectCartCount(1);
   });
 
-  test('should add multiple products to cart', async () => {
+  test('should add multiple products to cart @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.addProductToCart('Sauce Labs Backpack');
     await inventoryPage.addProductToCart('Sauce Labs Bike Light');
     await inventoryPage.addProductToCart('Sauce Labs Onesie');
     await inventoryPage.expectCartCount(3);
   });
 
-  test('should remove product from cart on inventory page', async () => {
+  test('should remove product from cart on inventory page @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.addProductToCart('Sauce Labs Backpack');
     await inventoryPage.expectCartCount(1);
-
     await inventoryPage.removeProductFromCart('Sauce Labs Backpack');
     await inventoryPage.expectCartEmpty();
   });
 
-  test('should add all products and verify cart count', async () => {
+  test('should add all products and verify cart count @regression', async ({
+    loggedInPage,
+    inventoryPage,
+  }) => {
     for (const product of products.products) {
       await inventoryPage.addProductToCart(product.name);
     }
     await inventoryPage.expectCartCount(products.totalProductCount);
   });
 
- 
-  test('should remove item from cart page', async () => {
+  test('should remove item from cart page @regression', async ({
+    loggedInPage,
+    inventoryPage,
+    cartPage,
+  }) => {
     await inventoryPage.addProductToCart('Sauce Labs Backpack');
     await inventoryPage.addProductToCart('Sauce Labs Bike Light');
     await inventoryPage.goToCart();
@@ -102,20 +117,24 @@ test.describe('Inventory Page Tests', () => {
     await cartPage.expectItemInCart('Sauce Labs Bike Light');
   });
 
-  test('should continue shopping from cart', async () => {
+  test('should continue shopping from cart @regression', async ({
+    loggedInPage,
+    inventoryPage,
+    cartPage,
+  }) => {
     await inventoryPage.addProductToCart('Sauce Labs Onesie');
     await inventoryPage.goToCart();
-
     await cartPage.continueShopping();
     await inventoryPage.expectPageLoaded();
     await inventoryPage.expectCartCount(1);
-   
   });
 
- 
-  test('should logout successfully', async ({ page }) => {
+  test('should logout successfully @smoke', async ({
+    loggedInPage,
+    inventoryPage,
+    page,
+  }) => {
     await inventoryPage.logout();
     await expect(page).toHaveURL(/saucedemo\.com\/?$/);
-   
   });
 });
