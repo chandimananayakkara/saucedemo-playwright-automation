@@ -1,0 +1,22 @@
+{
+  "validCustomer": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "zip": "10001"
+  },
+  "emptyFirstName": {
+    "firstName": "",
+    "lastName": "Doe",
+    "zip": "10001"
+  },
+  "emptyLastName": {
+    "firstName": "John",
+    "lastName": "",
+    "zip": "10001"
+  },
+  "emptyZip": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "zip": ""
+  }
+}

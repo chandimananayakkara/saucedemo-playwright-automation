@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   use: {
     trace: 'on-first-retry',
-    screenshot:'only-on-failure',
+    screenshot:'on',
     video:'retain-on-failure',
     baseURL:'https://www.saucedemo.com/',
     navigationTimeout:30*1000,
