@@ -1,0 +1,26 @@
+{
+  "name": "saucedemo-playwright-automation",
+  "version": "1.0.0",
+  "description": "E2E Test Automation Framework for SauceDemo using Playwright &amp; TypeScript",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chandimananayakkara/saucedemo-playwright-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chandimananayakkara/saucedemo-playwright-automation/issues"
+  },
+  "homepage": "https://github.com/chandimananayakkara/saucedemo-playwright-automation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
